@@ -7,32 +7,18 @@
 #include "group.h"
 
 
-Student::Student(std::string forename, std::string lastname)
-{
-    itsForename = forename;
-    itsLastname = lastname;
-}
-
-
-const string &Student::getItsForename() const
-{return itsForename;}
-
-
-const string &Student::getItsLastname() const
-{return itsLastname;}
-
-
-Group *Student::getItsGroup()
-{return itsGroup;}
-
-
-void Student::setItsGroup(Group *group)
-{itsGroup = group;}
+Student::Student(std::string forename,
+                 std::string lastname)
+    :
+      itsForename(forename),
+      itsLastname(lastname)
+{}
 
 
 bool Student::belongsToAGroup()
 {
     bool itBelongToAGroup = false;
+
     if(itsGroup != nullptr)
         itBelongToAGroup = true;
 
@@ -42,18 +28,35 @@ bool Student::belongsToAGroup()
 
 void Student::removeItsGroup()
 {
-    itsGroup->removeStudent(this);
-    itsGroup = nullptr;
+    if(belongsToAGroup()){
+        itsGroup->removeStudent(this);
+        itsGroup = nullptr;
+    }
 }
+
 
 void Student::display()
 {
     cout << "---- Student ----" << '\n'
          << "Forename : " << getItsForename() << '\n'
          << "Lastname : " << getItsLastname() << '\n'
-         << "its group : " << getItsGroup()->getItsGroupName() << "\n\n\n";
+         << "Group : " << getItsGroup()->getItsGroupName() << "\n\n\n";
 }
 
 
 
+/* Getter + Setter */
+const string &Student::getItsForename() const
+{return itsForename;}
 
+const string &Student::getItsLastname() const
+{return itsLastname;}
+
+Group *Student::getItsGroup()
+{return itsGroup;}
+
+void Student::setItsGroup(Group *group)
+{
+    itsGroup = group;
+    group->addStudent(this);
+}

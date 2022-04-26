@@ -7,20 +7,16 @@
 #include "student.h"
 
 
-Group::Group(std::string groupName)
-{itsGroupName = groupName;}
-
-
-const string &Group::getItsGroupName() const
-{return itsGroupName;}
-
-
-list<Student *> *Group::getItsStudents()
-{return &itsStudents;}
+Group::Group(std::string groupName): itsGroupName(groupName)
+{itsStudents = new list <Student*>;}
 
 
 void Group::addStudent(Student *student)
-{itsStudents.push_back(student);}
+{
+    bool found = (std::find(itsStudents->begin(), itsStudents->end(), student) != itsStudents->end());
+    if(!found)
+        itsStudents->push_back(student);
+}
 
 
 void Group::removeStudent(Student *student)
@@ -32,13 +28,13 @@ void Group::removeStudent(Student *student)
     //        itsStudents.remove(it);
     //    }
 
-    itsStudents.remove(student);
+    itsStudents->remove(student);
 }
 
 
 void Group::changeToThisGroup(Student *student)
 {
-    removeStudent(student->itsGroup);
+    //removeStudent(student);
     student->setItsGroup(this);
     addStudent(student);
 }
@@ -49,6 +45,14 @@ void Group::display()
     cout << "---- Group ----" << '\n'
          << "Name : " << getItsGroupName() << '\n';
 
-    for (Student* x : itsStudents)
+    for (Student* x : *itsStudents)
         x->display();
 }
+
+
+/* Getter */
+const string &Group::getItsGroupName() const
+{return itsGroupName;}
+
+list<Student *> *Group::getItsStudents()
+{return itsStudents;}

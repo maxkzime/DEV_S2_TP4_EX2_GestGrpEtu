@@ -11,20 +11,21 @@
 #include <algorithm>
 #include <iostream>
 
-
 using std::string, std::list, std::cout;
 
 class Student;
+
 class Group
 {
+
 private:
     string itsGroupName;
+    list <Student*> * itsStudents;
 
 public:
     Group(string groupName);
-    const string &getItsGroupName() const;
 
-    list <Student*> itsStudents;
+    const string &getItsGroupName() const;
     list <Student*>* getItsStudents();
     void addStudent(Student* student);
     void removeStudent(Student* student);

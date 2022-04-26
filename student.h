@@ -6,27 +6,32 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 
+#include <string>
 
 class Group;
+
+using std::string;
+
 class Student
 {
+
 private:
     string itsForename;
     string itsLastname;
 
-public:
-    Student(string forename, string lastname);
-
     Group * itsGroup;
+
+public:
+    Student(string forename,
+            string lastname);
 
     const string &getItsForename() const;
     const string &getItsLastname() const;
-    Group* getItsGroup();
+    Group * getItsGroup();
     void setItsGroup(Group* group);
     bool belongsToAGroup();
     void removeItsGroup();
     void display();
-
 };
 
 #endif // STUDENT_H
