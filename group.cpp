@@ -6,47 +6,50 @@
 #include "group.h"
 #include "student.h"
 
-
 Group::Group(std::string groupName): itsGroupName(groupName)
 {itsStudents = new list <Student*>;}
 
 
 void Group::addStudent(Student *student)
 {
-    bool found = (std::find(itsStudents->begin(), itsStudents->end(), student) != itsStudents->end());
-    if(!found)
+    if(student->getItsGroup() != nullptr){
+        if(student->getItsGroup() != this){
+            student->getItsGroup()->removeStudent(student);
+            itsStudents->push_back(student);
+            student->setItsGroup(this);
+        }else
+            cout << "Student is already in this group !\n";
+    }else{
         itsStudents->push_back(student);
+        student->setItsGroup(this);
+    }
 }
 
 
 void Group::removeStudent(Student *student)
 {
-    //    list <Student*>::iterator it = std::find(itsStudents.begin(), itsStudents.end(), student);
-
-    //    if (it != itsStudents.end())
-    //    {
-    //        itsStudents.remove(it);
-    //    }
+    /*    list <Student*>::iterator it = std::find(itsStudents.begin(), itsStudents.end(), student);
+     *    if (it != itsStudents.end())
+     *        itsStudents.remove(it);
+     */
 
     itsStudents->remove(student);
 }
 
-
 void Group::changeToThisGroup(Student *student)
-{
-    //removeStudent(student);
-    student->setItsGroup(this);
-    addStudent(student);
-}
+{addStudent(student);}
 
 
 void Group::display()
 {
-    cout << "---- Group ----" << '\n'
+    cout << "\n---- Group ----\n"
          << "Name : " << getItsGroupName() << '\n';
 
-    for (Student* x : *itsStudents)
-        x->display();
+    if(itsStudents->empty())
+        cout << "Group is empty";
+    else
+        for (Student * x : *itsStudents)
+            x->display();
 }
 
 

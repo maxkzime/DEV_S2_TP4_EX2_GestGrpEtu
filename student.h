@@ -19,11 +19,12 @@ private:
     string itsForename;
     string itsLastname;
 
-    Group * itsGroup;
+    Group * itsGroup = nullptr;
 
 public:
     Student(string forename,
-            string lastname);
+            string lastname,
+            Group * group);
 
     const string &getItsForename() const;
     const string &getItsLastname() const;

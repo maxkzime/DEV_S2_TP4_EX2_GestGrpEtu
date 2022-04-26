@@ -8,11 +8,12 @@
 
 
 Student::Student(std::string forename,
-                 std::string lastname)
+                 std::string lastname,
+                 Group *group)
     :
       itsForename(forename),
       itsLastname(lastname)
-{}
+{group->addStudent(this);}
 
 
 bool Student::belongsToAGroup()
@@ -31,16 +32,20 @@ void Student::removeItsGroup()
     if(belongsToAGroup()){
         itsGroup->removeStudent(this);
         itsGroup = nullptr;
-    }
+    }else
+        cout << "Doesnt belongs to a group !\n";
 }
 
 
 void Student::display()
 {
-    cout << "---- Student ----" << '\n'
+    cout << "\n---- Student ----\n"
          << "Forename : " << getItsForename() << '\n'
-         << "Lastname : " << getItsLastname() << '\n'
-         << "Group : " << getItsGroup()->getItsGroupName() << "\n\n\n";
+         << "Lastname : " << getItsLastname() << '\n';
+    if(belongsToAGroup())
+        cout << "Group : " << getItsGroup()->getItsGroupName() << "\n\n";
+    else
+        cout << "Doesnt belongs to a group." << "\n\n";
 }
 
 
@@ -56,7 +61,4 @@ Group *Student::getItsGroup()
 {return itsGroup;}
 
 void Student::setItsGroup(Group *group)
-{
-    itsGroup = group;
-    group->addStudent(this);
-}
+{itsGroup = group;}
